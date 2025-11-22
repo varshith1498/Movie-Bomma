@@ -27,8 +27,25 @@
         </dependency>
         <!-- JSP (provided by container like Tomcat) -->
     </dependencies>
+<build>
+    <plugins>
+        <!-- Use a modern WAR plugin that works with Java 11+ / 17+ -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.2</version>
+        </plugin>
 
-    <build>
-        <finalName>hotstar-clone</finalName>
-    </build>
+        <!-- (optional but good) Explicit compiler plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <source>17</source>   <!-- or 11, depending on what you use -->
+                <target>17</target>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 </project>
