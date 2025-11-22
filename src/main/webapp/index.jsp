@@ -1,154 +1,250 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.example.hotstar.Video" %>
-<%
-    List<Video> videos = (List<Video>) request.getAttribute("videos");
-%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hotstar Clone</title>
+    <title>Similar Hotstar</title>
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #020617;
-            color: #fff;
+            background-color: #050814;
+            color: white;
         }
-        header {
+
+        .navbar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 12px 40px;
-            background: linear-gradient(to bottom, #020617, transparent);
+            justify-content: space-between;
+            padding: 10px 40px;
+            background: #050814;
             position: sticky;
             top: 0;
             z-index: 10;
         }
+
         .logo {
-            font-weight: bold;
             font-size: 24px;
-            color: #38bdf8;
+            font-weight: bold;
+            color: #1f80e0;
         }
+
         .nav-links a {
-            margin: 0 10px;
+            margin: 0 15px;
             text-decoration: none;
-            color: #e5e7eb;
+            color: #d0d0d0;
             font-size: 14px;
         }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
         .hero {
-            height: 320px;
-            background: url("https://via.placeholder.com/1200x320?text=Hotstar+Banner") center/cover no-repeat;
             position: relative;
+            height: 320px;
+            background: linear-gradient(to right, #050814 20%, #141b2f);
             display: flex;
-            align-items: flex-end;
-            padding: 30px 40px;
+            align-items: center;
+            padding: 40px;
         }
-        .hero h1 {
+
+        .hero-content {
+            max-width: 40%;
+        }
+
+        .hero-title {
             font-size: 32px;
-            margin-bottom: 8px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
-        .hero p {
-            max-width: 500px;
+
+        .hero-meta {
+            font-size: 13px;
+            color: #c0c0c0;
+            margin-bottom: 15px;
+        }
+
+        .hero-desc {
             font-size: 14px;
-            color: #e5e7eb;
+            color: #dcdcdc;
+            margin-bottom: 20px;
         }
+
+        .hero-buttons button {
+            padding: 10px 22px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-watch {
+            background-color: #f9f9f9;
+            color: #000000;
+        }
+
+        .btn-more {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .hero-poster {
+            position: absolute;
+            right: 60px;
+            bottom: 0;
+            height: 260px;
+        }
+
+        .section {
+            padding: 20px 40px;
+        }
+
         .section-title {
-            margin: 20px 40px 10px;
             font-size: 18px;
+            margin-bottom: 10px;
         }
+
         .card-row {
             display: flex;
-            gap: 16px;
-            padding: 0 40px 40px;
+            gap: 14px;
             overflow-x: auto;
         }
+
         .card {
-            min-width: 250px;
-            background: #020617;
+            min-width: 150px;
+            background-color: #141b2f;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            flex-shrink: 0;
         }
+
         .card img {
             width: 100%;
             display: block;
         }
+
         .card-body {
-            padding: 10px 12px 14px;
+            padding: 8px;
+            font-size: 13px;
         }
+
         .card-title {
-            font-size: 16px;
+            font-weight: 600;
             margin-bottom: 4px;
         }
-        .card-category {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-bottom: 6px;
+
+        .card-meta {
+            font-size: 11px;
+            color: #aaaaaa;
         }
-        .card-desc {
-            font-size: 13px;
-            color: #d1d5db;
-            height: 36px;
-            overflow: hidden;
+
+        ::-webkit-scrollbar {
+            height: 6px;
         }
-        .watch-btn {
-            margin-top: 10px;
-            padding: 6px 12px;
-            border-radius: 999px;
-            border: none;
-            background: #38bdf8;
-            color: #0f172a;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 12px;
+
+        ::-webkit-scrollbar-thumb {
+            background: #333a52;
+            border-radius: 3px;
         }
-        .watch-btn:hover {
-            background: #0ea5e9;
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
     </style>
 </head>
 <body>
-<header>
-    <div class="logo">HotstarLite</div>
-    <nav class="nav-links">
-        <a href="#">Home</a>
+
+<div class="navbar">
+    <div class="logo">SimilarHotstar</div>
+    <div class="nav-links">
         <a href="#">TV</a>
         <a href="#">Movies</a>
         <a href="#">Sports</a>
+        <a href="#">Disney+</a>
         <a href="#">Kids</a>
-    </nav>
-</header>
-
-<section class="hero">
-    <div>
-        <h1>Watch your favourite shows & movies</h1>
-        <p>Sample Hotstar-like UI built in Java (Servlet + JSP). Click on any card to start watching a demo video.</p>
     </div>
-</section>
+</div>
 
-<h2 class="section-title">Trending Now</h2>
-<div class="card-row">
-    <%
-        if (videos != null) {
-            for (Video v : videos) {
-    %>
-    <div class="card">
-        <img src="<%= v.getThumbnailUrl() %>" alt="<%= v.getTitle() %>">
-        <div class="card-body">
-            <div class="card-title"><%= v.getTitle() %></div>
-            <div class="card-category"><%= v.getCategory() %></div>
-            <div class="card-desc"><%= v.getDescription() %></div>
-            <form action="watch" method="get">
-                <input type="hidden" name="id" value="<%= v.getId() %>">
-                <button class="watch-btn" type="submit">Watch Now</button>
-            </form>
+<div class="hero">
+    <div class="hero-content">
+        <div class="hero-title">Featured Show Title</div>
+        <div class="hero-meta">Drama • 2024 • 2 Seasons • 4K</div>
+        <div class="hero-desc">
+            A sample description for your Hotstar-like clone UI. Replace this text with your own content or
+            dynamic description later when you add backend logic.
+        </div>
+        <div class="hero-buttons">
+            <button class="btn-watch">▶ Watch</button>
+            <button class="btn-more">ℹ More Info</button>
         </div>
     </div>
-    <%
-            }
-        }
-    %>
+
+    <!-- Placeholder poster (you can replace src with any image URL) -->
+    <img class="hero-poster"
+         src="https://via.placeholder.com/300x260.png?text=Poster"
+         alt="Featured Poster">
+</div>
+
+<div class="section">
+    <div class="section-title">Trending Now</div>
+    <div class="card-row">
+        <div class="card">
+            <img src="https://via.placeholder.com/300x170.png?text=Movie+1" alt="Movie 1">
+            <div class="card-body">
+                <div class="card-title">Movie 1</div>
+                <div class="card-meta">Action • 2023</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x170.png?text=Movie+2" alt="Movie 2">
+            <div class="card-body">
+                <div class="card-title">Movie 2</div>
+                <div class="card-meta">Drama • 2022</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x170.png?text=Movie+3" alt="Movie 3">
+            <div class="card-body">
+                <div class="card-title">Movie 3</div>
+                <div class="card-meta">Comedy • 2021</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x170.png?text=Movie+4" alt="Movie 4">
+            <div class="card-body">
+                <div class="card-title">Movie 4</div>
+                <div class="card-meta">Thriller • 2024</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Latest &amp; Trending</div>
+    <div class="card-row">
+        <div class="card">
+            <img src="https://via.placeholder.com/300x170.png?text=Show+1" alt="Show 1">
+            <div class="card-body">
+                <div class="card-title">Show 1</div>
+                <div class="card-meta">Series • 10 Episodes</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x170.png?text=Show+2" alt="Show 2">
+            <div class="card-body">
+                <div class="card-title">Show 2</div>
+                <div class="card-meta">Series • 8 Episodes</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x170.png?text=Show+3" alt="Show 3">
+            <div class="card-body">
+                <div class="card-title">Show 3</div>
+                <div class="card-meta">Series • 5 Episodes</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
